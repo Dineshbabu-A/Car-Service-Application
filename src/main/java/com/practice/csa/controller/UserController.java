@@ -4,17 +4,19 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.practice.csa.requestdto.AuthRequest;
 import com.practice.csa.requestdto.UserRequest;
 import com.practice.csa.responsedto.UserResponse;
+import com.practice.csa.security.JWTService;
 import com.practice.csa.service.UserService;
 import com.practice.csa.utility.ResponseStructure;
 
@@ -23,6 +25,14 @@ public class UserController {
 	
 	@Autowired
 	public UserService userService;
+	
+	@Autowired
+	public JWTService jwtService;
+	
+	@PostMapping("/login")
+	public ResponseEntity<ResponseStructure<String>> login(@RequestBody AuthRequest authRequest){
+		return userService.login(authRequest);
+	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<ResponseStructure<UserResponse>> registerUser(@RequestBody UserRequest userRequest){
@@ -48,4 +58,6 @@ public class UserController {
 	public ResponseEntity<ResponseStructure<List<UserResponse>>> findAll(){
 		return userService.findAll();
 	}
+	
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.practice.csa.exception.CarIdNotFoundException;
 import com.practice.csa.exception.CarServiceIdNotFoundException;
 import com.practice.csa.exception.UserIdNotFoundException;
+import com.practice.csa.exception.UserNotFoundException;
 
 @RestControllerAdvice
 public class ApplicationHandler {
@@ -19,7 +20,7 @@ public class ApplicationHandler {
 		
 		errorStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		errorStructure.setMessage(carIdNotFoundException.getMessage());
-		errorStructure.setData("Provide valid Service Id ");
+		errorStructure.setData("Provide valid Car Id ");
 		
 		return new ResponseEntity<ErrorStructure<String>>(errorStructure,HttpStatus.NOT_FOUND);
 	}
@@ -43,7 +44,19 @@ public class ApplicationHandler {
 		
 		errorStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		errorStructure.setMessage(userIdNotFoundException.getMessage());
-		errorStructure.setData("Provide valid Service Id ");
+		errorStructure.setData("Provide valid User Id ");
+		
+		return new ResponseEntity<ErrorStructure<String>>(errorStructure,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorStructure<String>> userNotFoundException(UserNotFoundException userNotFoundException){
+		
+		ErrorStructure<String> errorStructure=new ErrorStructure<String>();
+		
+		errorStructure.setStatusCode(HttpStatus.NOT_FOUND.value());
+		errorStructure.setMessage(userNotFoundException.getMessage());
+		errorStructure.setData("Provide valid User Details ");
 		
 		return new ResponseEntity<ErrorStructure<String>>(errorStructure,HttpStatus.NOT_FOUND);
 	}

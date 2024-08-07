@@ -1,5 +1,7 @@
 package com.practice.csa.utility;
 
+import java.util.List;
+
 public class ResponseStructure <T>{
 	
 	private int statusCode;
